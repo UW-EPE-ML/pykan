@@ -25,7 +25,6 @@ output_label = [
     'label_Hqql', 'label_Zqq', 'label_Wqq', 'label_Tbqq', 'label_Tbl'
 ]
 
-i = 0
 for jet_data in tqdm(os.listdir('data')):
     if jet_data.endswith('.root') and '120' in jet_data:
         x_particles, x_jet, y = read_file(
@@ -40,9 +39,6 @@ for jet_data in tqdm(os.listdir('data')):
         # convert one-hot label back
         ys.append(np.argmax(y, axis=1))
 
-        i += 1
-
-        if i == 2: break
 
 x_pars = np.concatenate(x_pars)
 x_jets = np.concatenate(x_jets)
@@ -55,12 +51,12 @@ x_pars = x_pars[idx]
 x_jets = x_jets[idx]
 ys = ys[idx]  # .astype(float)
 
-
+N = len(x_pars)
 dataset = {}
-dataset['train_input'] = torch.tensor(x_pars[:1000]).to(device)
-dataset['train_label'] = torch.tensor(ys[:1000]).to(device)
-dataset['test_input'] = torch.tensor(x_pars[1000:2000]).to(device)
-dataset['test_label'] = torch.tensor(ys[1000:2000]).to(device)
+dataset['train_input'] = torch.tensor(x_pars[:int(N/2)]).to(device)
+dataset['train_label'] = torch.tensor(ys[:int(N/2)]).to(device)
+dataset['test_input'] = torch.tensor(x_pars[int(N/2)+1:]).to(device)
+dataset['test_label'] = torch.tensor(ys[int(N/2)+1:]).to(device)
 
 # create a KAN: 4-D inputs, 10-D output, and 5 hidden neurons. cubic spline (k=3), 5 grid intervals (grid=5).
 model = KAN(width=[n_features, len(output_label)], grid=3, k=3, device=device)
