@@ -64,7 +64,7 @@ dataset['test_label'] = torch.tensor(ys[1000:2000]).to(device)
 
 # create a KAN: 4-D inputs, 10-D output, and 5 hidden neurons. cubic spline (k=3), 5 grid intervals (grid=5).
 model = KAN(width=[n_features, len(output_label)], grid=3, k=3, device=device)
-model.update_grid_from_samples(dataset['train_input'])
+# model.update_grid_from_samples(dataset['train_input'].to(device))
 
 
 def train_acc():
