@@ -66,8 +66,6 @@ dataset['test_label'] = torch.tensor(ys[1000:2000]).to(device)
 model = KAN(width=[n_features, len(output_label)], grid=3, k=3, device=device)
 # model.update_grid_from_samples(dataset['train_input'].to(device))
 
-# print([(n, p.device) for n, p in model.named_parameters()])
-
 def train_acc():
     return torch.mean((torch.argmax(model(dataset['train_input']), dim=1) == dataset['train_label']).float())
 
@@ -81,6 +79,6 @@ results = model.train(
     opt="LBFGS",
     steps=200,
     # metrics=(train_acc, test_acc),
-    loss_fn=torch.nn.CrossEntropyLoss()
+    loss_fn=torch.nn.CrossEntropyLoss().to(device),
 )
 print(results['train_acc'][-1], results['test_acc'][-1])
