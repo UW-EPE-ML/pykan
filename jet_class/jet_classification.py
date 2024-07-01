@@ -79,7 +79,7 @@ results = model.train(
     dataset,
     opt="LBFGS",
     steps=200,
-    metrics=(train_acc, test_acc),
+    # metrics=(train_acc, test_acc),
     loss_fn=torch.nn.CrossEntropyLoss()
 )
 print(results['train_acc'][-1], results['test_acc'][-1])
