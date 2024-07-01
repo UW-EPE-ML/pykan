@@ -60,8 +60,9 @@ dataset['train_label'] = torch.tensor(ys[:1000])
 dataset['test_input'] = torch.tensor(x_pars[1000:2000])
 dataset['test_label'] = torch.tensor(ys[1000:2000])
 
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 # create a KAN: 4-D inputs, 10-D output, and 5 hidden neurons. cubic spline (k=3), 5 grid intervals (grid=5).
-model = KAN(width=[n_features, len(output_label)], grid=3, k=3)
+model = KAN(width=[n_features, len(output_label)], grid=3, k=3, device=device)
 model.update_grid_from_samples(dataset['train_input'])
 
 
