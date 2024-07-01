@@ -83,3 +83,5 @@ results = model.train(
     device=device,
 )
 print(results['train_acc'][-1], results['test_acc'][-1])
+
+model.save_ckpt('model.ckpt')
