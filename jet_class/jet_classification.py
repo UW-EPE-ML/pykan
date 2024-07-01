@@ -77,8 +77,9 @@ def test_acc():
 results = model.train(
     dataset,
     opt="LBFGS",
-    steps=200,
+    steps=50,
     # metrics=(train_acc, test_acc),
     loss_fn=torch.nn.CrossEntropyLoss().to(device),
+    device=device,
 )
 print(results['train_acc'][-1], results['test_acc'][-1])
