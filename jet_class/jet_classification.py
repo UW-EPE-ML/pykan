@@ -78,7 +78,7 @@ results = model.train(
     metrics=(train_acc, test_acc),
     loss_fn=torch.nn.CrossEntropyLoss().to(device),
     lamb_coef=1e-3,
-    batch=256,
+    batch=128,
     device=device,
 )
 print(results['train_acc'][-1], results['test_acc'][-1])
