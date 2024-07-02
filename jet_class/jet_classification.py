@@ -39,6 +39,9 @@ for jet_data in tqdm(os.listdir('data')):
         # convert one-hot label back
         ys.append(np.argmax(y, axis=1))
 
+        break
+
+
 
 x_pars = np.concatenate(x_pars)
 x_jets = np.concatenate(x_jets)
@@ -76,7 +79,8 @@ results = model.train(
     steps=50,
     metrics=(train_acc, test_acc),
     loss_fn=torch.nn.CrossEntropyLoss().to(device),
-    batch=64,
+    lamb_coef=1e-3,
+    batch=256,
     device=device,
 )
 print(results['train_acc'][-1], results['test_acc'][-1])
