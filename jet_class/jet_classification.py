@@ -58,7 +58,12 @@ dataset['test_input'] = torch.tensor(x_pars[int(N / 2) + 1:]).to(device)
 dataset['test_label'] = torch.tensor(ys[int(N / 2) + 1:]).to(device)
 
 # create a KAN: 4-D inputs, 10-D output, and 5 hidden neurons. cubic spline (k=3), 5 grid intervals (grid=5).
-model = KAN(width=[n_features, len(output_label)], grid=3, k=3, device=device)
+model = KAN(
+    width=[n_features, len(output_label)],
+    grid=5,
+    k=3,
+    device=device
+)
 
 
 # model.update_grid_from_samples(dataset['train_input'].to(device))
